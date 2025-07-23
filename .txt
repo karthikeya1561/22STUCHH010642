@@ -1,0 +1,21 @@
+{
+    "token_type": "Bearer",
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiYXVkIjoiaHR0cDovLzIwLjI0NC41Ni4xNDQvZXZhbHVhdGlvbi1zZXJ2aWNlIiwiZW1haWwiOiJrb25kdXJpc3VyeWFrYXJ0aGlrZXlhMjJAaWZoZWluZGlhLm9yZyIsImV4cCI6MTc1MzI1MjY2NiwiaWF0IjoxNzUzMjUxNzY2LCJpc3MiOiJBZmZvcmQgTWVkaWNhbCBUZWNobm9sb2dpZXMgUHJpdmF0ZSBMaW1pdGVkIiwianRpIjoiOTM2MTk3NGYtMGQ4NS00NzgzLWEzNjEtNjMyMjM3MzAxZGMyIiwibG9jYWxlIjoiZW4tSU4iLCJuYW1lIjoiayBzdXJ5YSBrYXJ0aGlrZXlhIiwic3ViIjoiOTVlOTliYWQtYjk5NS00YWNhLWI5MjktMDM3MjczNjJmOWU5In0sImVtYWlsIjoia29uZHVyaXN1cnlha2FydGhpa2V5YTIyQGlmaGVpbmRpYS5vcmciLCJuYW1lIjoiayBzdXJ5YSBrYXJ0aGlrZXlhIiwicm9sbE5vIjoiMjJzdHVjaGgwMTA2NDIiLCJhY2Nlc3NDb2RlIjoiYkN1Q0ZUIiwiY2xpZW50SUQiOiI5NWU5OWJhZC1iOTk1LTRhY2EtYjkyOS0wMzcyNzM2MmY5ZTkiLCJjbGllbnRTZWNyZXQiOiJ1c1RUTmZKY3RHa3VVQkFSIn0.7jX43ccUnTuEdyEh-Md9B6O2K99Zp3ChRPZ3xWTgEl8",
+    "expires_in": 1753252666
+}
+
+
+{
+    "email": "kondurisuryakarthikeya22@ifheindia.org",
+    "name": "k surya karthikeya",
+    "rollNo": "22stuchh010642",
+    "accessCode": "bCuCFT",
+    "clientID": "95e99bad-b995-4aca-b929-03727362f9e9",
+    "clientSecret": "usTTNfJctGkuUBAR"
+}
+
+
+{
+    "logID": "71b1aa9a-386c-451e-a2f5-d8bbd341fd9e",
+    "message": "log created successfully"
+}
