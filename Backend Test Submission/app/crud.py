@@ -1,31 +1,100 @@
-from utils import log
-from sqlalchemy.orm import Session
-from . import models, schemas
+from utils.log import log
+import sqlite3
+from . import schemas
 
-def create_url(db: Session, url: schemas.UrlCreate):
+DB_PATH = "./test.db"
+
+def create_url(url: schemas.UrlCreate):
     log(stack="backend", level="info", pkg="repository", message="create_url called")
-    db_url = models.URL(original_url=url.original_url)
-    db.add(db_url)
-    db.commit()
-    db.refresh(db_url)
-    return db_url
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS url_mappings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            original_url TEXT NOT NULL,
+            short_url TEXT UNIQUE NOT NULL
+        )
+    """)
+    cursor.execute(
+        "INSERT INTO url_mappings (original_url, short_url) VALUES (?, ?)",
+        (url.original_url, url.short_url)
+    )
+    conn.commit()
+    url_id = cursor.lastrowid
+    cursor.execute("SELECT id, original_url, short_url FROM url_mappings WHERE id = ?", (url_id,))
+    row = cursor.fetchone()
+    conn.close()
+    return {"id": row[0], "original_url": row[1], "short_url": row[2]}
 
-def get_url(db: Session, url_id: int):
+def get_url(url_id: int):
     log(stack="backend", level="info", pkg="repository", message="get_url called")
-    return db.query(models.URL).filter(models.URL.id == url_id).first()
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS url_mappings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            original_url TEXT NOT NULL,
+            short_url TEXT UNIQUE NOT NULL
+        )
+    """)
+    cursor.execute("SELECT id, original_url, short_url FROM url_mappings WHERE id = ?", (url_id,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return {"id": row[0], "original_url": row[1], "short_url": row[2]}
+    return None
 
-def get_url_by_shortened(db: Session, shortened_url: str):
+def get_url_by_shortened(shortened_url: str):
     log(stack="backend", level="info", pkg="repository", message="get_url_by_shortened called")
-    return db.query(models.URL).filter(models.URL.shortened_url == shortened_url).first()
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS url_mappings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            original_url TEXT NOT NULL,
+            short_url TEXT UNIQUE NOT NULL
+        )
+    """)
+    cursor.execute("SELECT id, original_url, short_url FROM url_mappings WHERE short_url = ?", (shortened_url,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return {"id": row[0], "original_url": row[1], "short_url": row[2]}
+    return None
 
-def get_urls(db: Session, skip: int = 0, limit: int = 10):
+def get_urls(skip: int = 0, limit: int = 10):
     log(stack="backend", level="info", pkg="repository", message="get_urls called")
-    return db.query(models.URL).offset(skip).limit(limit).all()
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS url_mappings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            original_url TEXT NOT NULL,
+            short_url TEXT UNIQUE NOT NULL
+        )
+    """)
+    cursor.execute("SELECT id, original_url, short_url FROM url_mappings LIMIT ? OFFSET ?", (limit, skip))
+    rows = cursor.fetchall()
+    conn.close()
+    return [{"id": row[0], "original_url": row[1], "short_url": row[2]} for row in rows]
 
-def delete_url(db: Session, url_id: int):
+def delete_url(url_id: int):
     log(stack="backend", level="info", pkg="repository", message="delete_url called")
-    db_url = db.query(models.URL).filter(models.URL.id == url_id).first()
-    if db_url:
-        db.delete(db_url)
-        db.commit()
-    return db_url
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS url_mappings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            original_url TEXT NOT NULL,
+            short_url TEXT UNIQUE NOT NULL
+        )
+    """)
+    cursor.execute("SELECT id, original_url, short_url FROM url_mappings WHERE id = ?", (url_id,))
+    row = cursor.fetchone()
+    if row:
+        cursor.execute("DELETE FROM url_mappings WHERE id = ?", (url_id,))
+        conn.commit()
+    conn.close()
+    if row:
+        return {"id": row[0], "original_url": row[1], "short_url": row[2]}
+    return None

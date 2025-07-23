@@ -1,4 +1,4 @@
-from utils import log
+from utils.log import log
 from pydantic import BaseModel
 
 def log_schema_operation(operation: str):

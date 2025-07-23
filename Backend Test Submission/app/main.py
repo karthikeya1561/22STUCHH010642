@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from utils import log
+from utils.log import log
 from app.api.endpoints import router as api_router
 
 app = FastAPI()
