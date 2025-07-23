@@ -1,2 +1,4 @@
 Backend Test Submission/virtual
 Backend Test Submission\app\__pycache__
+Backend Test Submission\app\__pycache__\*.pyc
+*.pyc

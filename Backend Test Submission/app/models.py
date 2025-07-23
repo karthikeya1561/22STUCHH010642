@@ -1,7 +1,13 @@
+from utils import log
+
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+
+def log_model_operation(operation: str):
+    log(stack="models.py", level="INFO", pkg="models", message=f"{operation} called")
+
 
 class URLMapping(Base):
     __tablename__ = 'url_mappings'

@@ -1,4 +1,8 @@
+from utils import log
 from pydantic import BaseModel
+
+def log_schema_operation(operation: str):
+    log(stack="backend", level="info", pkg="domain", message=f"{operation} called")
 
 class UrlCreate(BaseModel):
     original_url: str

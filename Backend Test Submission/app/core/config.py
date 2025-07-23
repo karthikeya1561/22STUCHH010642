@@ -1,4 +1,7 @@
-from pydantic import BaseSettings
+from utils import log
+def log_config_operation(operation: str):
+    log(stack="config.py", level="INFO", pkg="core", message=f"{operation} called")
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./test.db"
